@@ -15,7 +15,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // Method to send messages to webview
     sendToWebview: (message) => {
         return ipcRenderer.invoke('send-to-webview', message);
-    }
+    },
+
+    // Method to get the fullscreen hijack script
+    getFullscreenScript: () => ipcRenderer.invoke('get-fullscreen-script')
 });
 
 // Initialize fullscreen handling when DOM is ready

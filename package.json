@@ -4,12 +4,16 @@
   "description": "A multi-window browser application built with Electron.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "start-web": "node main.js --web"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^28.2.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
