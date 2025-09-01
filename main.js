@@ -7,37 +7,38 @@ function createWindow() {
         width: 1200,
         height: 800,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'), // Recommended for security
-            webviewTag: true, // Enable the <webview> tag
+            preload: path.join(__dirname, 'preload.js'),
+            webviewTag: true,
             contextIsolation: true,
             nodeIntegration: false,
         },
-        backgroundColor: '#111827', // Match your bg-gray-900
+        backgroundColor: '#111827',
     });
 
-    // --- THE FIX ---
-    // Listen for the window itself trying to enter fullscreen and prevent it.
-    // This stops the default OS-level fullscreen behavior.
     mainWindow.on('enter-full-screen', (event) => {
         console.log('Main process caught window entering fullscreen. Preventing it.');
         event.preventDefault();
     });
 
-    // and load the index.html of the app.
-    mainWindow.loadFile('index.html');
+    mainWindow.webContents.on('enter-html-full-screen', (event) => {
+        console.log('Preventing HTML fullscreen in main window');
+        event.preventDefault();
+    });
 
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.on('leave-html-full-screen', (event) => {
+        console.log('Preventing HTML fullscreen exit in main window');
+        event.preventDefault();
+    });
+
+    mainWindow.loadFile('index.html');
 }
 
 app.whenReady().then(() => {
-    // --- SOLUTION FOR X-FRAME-OPTIONS ---
     // Intercept all network responses before they are sent to the renderer.
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
         const responseHeaders = { ...details.responseHeaders };
 
         // Delete the 'x-frame-options' header if it exists.
-        // This allows rendering sites like Google in a webview/iframe.
         Object.keys(responseHeaders).forEach(header => {
             if (header.toLowerCase() === 'x-frame-options') {
                 delete responseHeaders[header];
