@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Window Browser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="overflow-hidden">
+
+    <!-- The main container where webviews will be dynamically added -->
+    <div id="container">
+        <!-- Initial view starts with one webview via script -->
+    </div>
+    
+    <!-- The dock container for the "add" button, revealed on hover -->
+    <div id="dock" class="fixed bottom-0 left-0 right-0 h-24 flex justify-center items-center pointer-events-auto">
+         <!-- The Add button starts here -->
+         <button id="addButton" class="z-20 bg-indigo-600 text-white rounded-full p-4 shadow-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 pointer-events-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Link to the external renderer script -->
+    <script src="renderer.js"></script>
+</body>
+</html>
